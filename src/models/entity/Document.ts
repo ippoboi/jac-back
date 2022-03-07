@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column, Timestamp, ManyToOne} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, Timestamp, ManyToOne, OneToOne} from "typeorm";
+import { Event } from "./Event";
 
 @Entity()
 export class Document {
@@ -11,6 +12,9 @@ export class Document {
 
     @Column()
     eventId: number;
+
+    @OneToOne(() => Event, event => event.id)
+    event: Event;
 
     @Column({nullable: false})
     path: string; //where the file is stored in the file system

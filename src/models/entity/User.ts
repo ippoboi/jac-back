@@ -25,7 +25,7 @@ export class User{
     @Column()
     dateOfBirth: Date;
 
-    @ManyToOne(() => Role, role => role.id) //not sure abt label
+    @ManyToOne(() => Role, role => role.id)
     role: Role;
 
     @Column()
