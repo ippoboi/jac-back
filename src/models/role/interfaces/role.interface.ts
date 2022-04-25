@@ -1,1 +1,4 @@
-export interface Role {}
+export interface Role {
+  id: number;
+  label: string;
+}

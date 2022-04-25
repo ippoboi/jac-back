@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Event } from './Event';
-import { User } from './User';
+import { Event } from '../../event/entity/Event.entity';
+import { User } from '../../user/entity/User.entity';
 
 @Entity()
 export class Registration {

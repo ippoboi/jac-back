@@ -1,1 +1,5 @@
-export interface Registration {}
+export interface Registration {
+  id: number;
+  userId: number;
+  eventId: number;
+}

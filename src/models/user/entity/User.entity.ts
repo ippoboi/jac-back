@@ -1,12 +1,6 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  Timestamp,
-  ManyToOne,
-} from 'typeorm';
-import { Role } from './Role';
-import { roleLabelsEnum } from './roleLabelsEnum';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Role } from '../../role/entity/Role.entity';
+import { roleLabelsEnum } from 'src/entity/roleLabelsEnum.enum';
 
 @Entity()
 export class User {
@@ -22,6 +16,9 @@ export class User {
   @Column()
   firstName: string;
 
+  @Column()
+  lastName: string;
+
   @Column({
     type: 'enum',
     enum: roleLabelsEnum,
@@ -30,16 +27,13 @@ export class User {
   roleId: number;
 
   @Column()
-  lastName: string;
-
-  @Column()
   dateOfBirth: Date;
 
   @ManyToOne(() => Role, (role) => role.id)
   role: Role;
 
-  @Column()
-  createdAt: Timestamp;
+  @Column({ type: 'timestamp' })
+  createdAt: Date;
 
   @Column()
   isActive: boolean;
