@@ -1,5 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from 'typeorm';
-import { eventsCategoryEnum } from 'src/entity/eventsCategoryEnum.enum';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  ManyToOne,
+} from 'typeorm';
+import { eventsCategory } from 'src/models/events-category/entities/eventsCategory.entity';
 import { User } from 'src/models/user/entity/User.entity';
 
 @Entity()
@@ -29,7 +35,10 @@ export class Event {
   user: User;
 
   @Column()
-  category: eventsCategoryEnum;
+  category: number;
+
+  @ManyToOne(() => eventsCategory, (category) => category.id)
+  categoryId: eventsCategory;
 
   @Column()
   date: Date;

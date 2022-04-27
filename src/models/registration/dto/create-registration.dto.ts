@@ -1,1 +1,5 @@
-export class CreateRegistrationDto {}
+export class CreateRegistrationDto {
+  id: number;
+  userId: number;
+  eventId: number;
+}

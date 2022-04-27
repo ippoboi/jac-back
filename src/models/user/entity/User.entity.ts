@@ -1,11 +1,22 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  ManyToOne,
+  BeforeInsert,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Role } from '../../role/entity/Role.entity';
-import { roleLabelsEnum } from 'src/entity/roleLabelsEnum.enum';
+import { v4 as uuidv4 } from 'uuid';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @BeforeInsert()
+  generate() {
+    this.id = uuidv4();
+  }
 
   @Column()
   email: string;
@@ -19,11 +30,7 @@ export class User {
   @Column()
   lastName: string;
 
-  @Column({
-    type: 'enum',
-    enum: roleLabelsEnum,
-    default: roleLabelsEnum.MEMBER,
-  })
+  @Column()
   roleId: number;
 
   @Column()
