@@ -10,5 +10,5 @@ export class Role {
   user: User[];
 
   @Column()
-  label: string;
+  name: string;
 }

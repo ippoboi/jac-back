@@ -10,15 +10,15 @@ import { v4 as uuidv4 } from 'uuid';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @BeforeInsert()
-  generate() {
-    this.id = uuidv4();
-  }
+  // @BeforeInsert()
+  // generate() {
+  //   this.id = uuidv4();
+  // }
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
@@ -29,6 +29,9 @@ export class User {
 
   @Column()
   lastName: string;
+
+  // @Column({ unique: true })
+  // phone: number;
 
   @Column()
   roleId: number;

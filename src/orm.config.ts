@@ -4,7 +4,6 @@ import { Event } from './models/event/entity/Event.entity';
 import { eventsCategory } from './models/events-category/entities/eventsCategory.entity';
 import { Question } from './models/question/entity/Question.entity';
 import { Registration } from './models/registration/entity/Registration.entity';
-import { roleLabels } from './models/role-labels/entities/roleLabels.entity';
 import { Role } from './models/role/entity/Role.entity';
 import { User } from './models/user/entity/User.entity';
 
@@ -23,7 +22,6 @@ export const config: TypeOrmModuleOptions = {
     Registration,
     Document,
     eventsCategory,
-    roleLabels,
   ],
   synchronize: true,
   autoLoadEntities: true,

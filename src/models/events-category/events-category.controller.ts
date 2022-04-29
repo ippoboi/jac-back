@@ -1,8 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { EventsCategoryService } from './events-category.service';
 import { CreateEventsCategoryDto } from './dto/create-events-category.dto';
 import { UpdateEventsCategoryDto } from './dto/update-events-category.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('events-category')
 @Controller('events-category')
 export class EventsCategoryController {
   constructor(private readonly eventsCategoryService: EventsCategoryService) {}
@@ -23,7 +33,10 @@ export class EventsCategoryController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEventsCategoryDto: UpdateEventsCategoryDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateEventsCategoryDto: UpdateEventsCategoryDto,
+  ) {
     return this.eventsCategoryService.update(+id, updateEventsCategoryDto);
   }
 
