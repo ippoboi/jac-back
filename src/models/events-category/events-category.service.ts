@@ -1,26 +1,45 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateEventsCategoryDto } from './dto/create-events-category.dto';
 import { UpdateEventsCategoryDto } from './dto/update-events-category.dto';
+import { eventsCategory } from './entities/eventsCategory.entity';
 
 @Injectable()
 export class EventsCategoryService {
+  constructor(
+    @InjectRepository(eventsCategory)
+    private eventsCategoryRepository: Repository<eventsCategory>,
+  ) {}
   create(createEventsCategoryDto: CreateEventsCategoryDto) {
-    return 'This action adds a new eventsCategory';
+    const newEventCategory = this.eventsCategoryRepository.create(
+      createEventsCategoryDto,
+    );
+    return this.eventsCategoryRepository.save(newEventCategory);
   }
 
   findAll() {
-    return `This action returns all eventsCategory`;
+    return this.eventsCategoryRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} eventsCategory`;
+    return this.eventsCategoryRepository.findOne({
+      select: [],
+      where: { id },
+    });
   }
 
-  update(id: number, updateEventsCategoryDto: UpdateEventsCategoryDto) {
-    return `This action updates a #${id} eventsCategory`;
+  async update(id: number, updateEventsCategoryDto: UpdateEventsCategoryDto) {
+    const eventCategory = await this.findOne(id);
+
+    eventCategory.id = updateEventsCategoryDto.id;
+    eventCategory.name = updateEventsCategoryDto.name;
+
+    return this.eventsCategoryRepository.save(eventCategory);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} eventsCategory`;
+  async remove(id: number) {
+    const eventCategory = await this.findOne(id);
+    return this.eventsCategoryRepository.remove(eventCategory);
   }
 }

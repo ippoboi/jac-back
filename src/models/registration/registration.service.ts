@@ -1,26 +1,44 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateRegistrationDto } from './dto/create-registration.dto';
 import { UpdateRegistrationDto } from './dto/update-registration.dto';
+import { Registration } from './entity/Registration.entity';
 
 @Injectable()
 export class RegistrationService {
+  constructor(
+    @InjectRepository(Registration)
+    private registrationRepository: Repository<Registration>,
+  ) {}
   create(createRegistrationDto: CreateRegistrationDto) {
-    return 'This action adds a new registration';
+    const newRegistration = this.registrationRepository.create(
+      createRegistrationDto,
+    );
+    return this.registrationRepository.save(newRegistration);
   }
 
   findAll() {
-    return `This action returns all registration`;
+    return this.registrationRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} registration`;
+    return this.registrationRepository.findOne({
+      where: { id },
+    });
   }
 
-  update(id: number, updateRegistrationDto: UpdateRegistrationDto) {
-    return `This action updates a #${id} registration`;
+  async update(id: number, updateRegistrationDto: UpdateRegistrationDto) {
+    const registration = await this.findOne(id);
+
+    registration.eventId = updateRegistrationDto.eventId;
+    registration.userId = updateRegistrationDto.userId;
+
+    return this.registrationRepository.save(registration);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} registration`;
+  async remove(id: number) {
+    const registration = await this.findOne(id);
+    return this.registrationRepository.remove(registration);
   }
 }

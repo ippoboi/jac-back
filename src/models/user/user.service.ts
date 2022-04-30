@@ -21,7 +21,6 @@ export class UserService {
 
   findOne(id: number): Promise<User> {
     return this.userRepository.findOne({
-      select: [],
       where: { id },
     });
   }
