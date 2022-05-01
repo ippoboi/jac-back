@@ -11,6 +11,7 @@ import { EventModule } from './models/event/event.module';
 import { RegistrationModule } from './models/registration/registration.module';
 import { DocumentModule } from './models/document/document.module';
 import { EventsCategoryModule } from './models/events-category/events-category.module';
+import { AuthModule } from './models/auth/auth.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { EventsCategoryModule } from './models/events-category/events-category.m
     RegistrationModule,
     DocumentModule,
     EventsCategoryModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

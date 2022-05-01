@@ -2,9 +2,6 @@ import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { getConnectionName } from '@nestjs/typeorm';
-import { getConnection } from 'typeorm';
-import { createConnection } from 'net';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

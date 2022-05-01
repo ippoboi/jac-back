@@ -4,9 +4,10 @@ import {
   ManyToOne,
   BeforeInsert,
   PrimaryGeneratedColumn,
+  CreateDateColumn,
 } from 'typeorm';
 import { Role } from '../../role/entity/Role.entity';
-import { v4 as uuidv4 } from 'uuid';
+import * as bcrypt from 'bcrypt';
 
 @Entity()
 export class User {
@@ -33,18 +34,24 @@ export class User {
   // @Column({ unique: true })
   // phone: number;
 
-  @Column()
+  @Column({ default: 1 })
   roleId: number;
 
-  @Column()
+  @Column({ nullable: true })
   dateOfBirth: Date;
 
   @ManyToOne(() => Role, (role) => role.id)
   role: Role;
 
-  @Column({ type: 'timestamp' })
+  @CreateDateColumn()
   createdAt: Date;
 
-  @Column()
+  @Column({ default: false })
   isActive: boolean;
+
+  @BeforeInsert()
+  async setPassword(password: string) {
+    const salt = await bcrypt.genSalt();
+    this.password = await bcrypt.hash(password || this.password, salt);
+  }
 }

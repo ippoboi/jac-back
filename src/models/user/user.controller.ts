@@ -6,10 +6,15 @@ import {
   Patch,
   Param,
   Delete,
+  ValidationPipe,
+  HttpStatus,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserRegisterRequestDto } from './dto/user-register.req.dto';
+import { SETTINGS } from 'src/app.utils';
+import { User } from './entity/User.entity';
 
 @Controller('user')
 export class UserController {
@@ -38,5 +43,13 @@ export class UserController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
+  }
+
+  @Post('register')
+  async register(
+    @Body(SETTINGS.VALIDATION_PIPE)
+    userRegister: UserRegisterRequestDto,
+  ): Promise<User> {
+    return await this.userService.register(userRegister);
   }
 }
