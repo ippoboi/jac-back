@@ -1,3 +1,5 @@
+import { IsOptional } from 'class-validator';
+
 export class CreateUserDto {
   id: number;
   email: string;
@@ -6,6 +8,7 @@ export class CreateUserDto {
   lastName: string;
   // phone: number;
   roleId: number;
+  @IsOptional()
   dateOfBirth: Date;
   createdAt: Date;
   isActive: boolean;

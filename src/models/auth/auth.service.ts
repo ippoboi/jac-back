@@ -12,12 +12,15 @@ export class AuthService {
   async validateUserCreds(email: string, password: string): Promise<any> {
     const user = await this.userService.getUserByEmail(email);
 
-    console.log('test');
-    if (!user) throw new BadRequestException();
+    if (!user) {
+      throw new BadRequestException();
+    }
 
-    console.log('test2');
-    if (!(await bcrypt.compare(password, user.password)))
+    const isMatch = console.log(await bcrypt.compare(password, user.password));
+    console.log(isMatch);
+    if (!(await bcrypt.compare(password, user.password))) {
       throw new UnauthorizedException();
+    }
 
     return user;
   }
