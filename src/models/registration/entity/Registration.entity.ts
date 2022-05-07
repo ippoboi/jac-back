@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToOne,
+} from 'typeorm';
 import { Event } from '../../event/entity/Event.entity';
 import { User } from '../../user/entity/User.entity';
 
@@ -10,12 +16,12 @@ export class Registration {
   @Column()
   userId: number;
 
-  @OneToMany(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.registration)
   user: User;
 
   @Column()
   eventId: number;
 
-  @OneToMany(() => Event, (event) => event.id)
+  @ManyToOne(() => Event, (event) => event.registration)
   event: Event;
 }

@@ -15,6 +15,9 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
+  require('dotenv').config();
+  console.log(process.env.PASSWORD);
+
   await app.listen(3000);
 }
 bootstrap();

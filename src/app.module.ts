@@ -12,9 +12,13 @@ import { RegistrationModule } from './models/registration/registration.module';
 import { DocumentModule } from './models/document/document.module';
 import { EventsCategoryModule } from './models/events-category/events-category.module';
 import { AuthModule } from './models/auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
+// import { APP_GUARD } from '@nestjs/core';
+// import { RolesGuard } from './guards/roles.guard';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot(config),
     UserModule,
     QuestionModule,
@@ -26,6 +30,12 @@ import { AuthModule } from './models/auth/auth.module';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: RolesGuard,
+    // },
+  ],
 })
 export class AppModule {}

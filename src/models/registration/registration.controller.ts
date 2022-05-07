@@ -28,8 +28,8 @@ export class RegistrationController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.registrationService.findOne(+id);
+  findOne(@Param('id') eventId: number) {
+    return this.registrationService.findOne(eventId);
   }
 
   @Patch(':id')

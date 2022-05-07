@@ -4,9 +4,11 @@ import {
   Column,
   OneToOne,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { eventsCategory } from 'src/models/events-category/entities/eventsCategory.entity';
 import { User } from 'src/models/user/entity/User.entity';
+import { Registration } from 'src/models/registration/entity/Registration.entity';
 
 @Entity()
 export class Event {
@@ -36,6 +38,9 @@ export class Event {
 
   @Column()
   category: number;
+
+  @OneToMany(() => Registration, (registration) => registration.event)
+  registration: Registration[];
 
   @ManyToOne(() => eventsCategory, (category) => category.id)
   categoryId: eventsCategory;

@@ -22,9 +22,9 @@ export class RegistrationService {
     return this.registrationRepository.find();
   }
 
-  findOne(id: number) {
+  findOne(eventId: number) {
     return this.registrationRepository.findOne({
-      where: { id },
+      where: { eventId },
     });
   }
 

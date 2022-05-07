@@ -1,4 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { DB_CONNECTION } from './config/connection';
 import { Document } from './models/document/entity/Document.entity';
 import { Event } from './models/event/entity/Event.entity';
 import { eventsCategory } from './models/events-category/entities/eventsCategory.entity';
@@ -10,10 +11,10 @@ import { User } from './models/user/entity/User.entity';
 export const config: TypeOrmModuleOptions = {
   type: 'postgres',
   host: '127.0.0.1',
-  port: 5432,
-  username: 'postgres',
-  password: 'pokemon2002',
-  database: 'jactestdb',
+  port: DB_CONNECTION.PORT,
+  username: DB_CONNECTION.USERNAME,
+  password: DB_CONNECTION.PASSWORD,
+  database: DB_CONNECTION.DATABASE,
   entities: [
     User,
     Question,

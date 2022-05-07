@@ -5,9 +5,13 @@ import {
   BeforeInsert,
   PrimaryGeneratedColumn,
   CreateDateColumn,
+  ManyToMany,
+  JoinTable,
+  OneToMany,
 } from 'typeorm';
 import { Role } from '../../role/entity/Role.entity';
 import * as bcrypt from 'bcrypt';
+import { Registration } from 'src/models/registration/entity/Registration.entity';
 
 @Entity()
 export class User {
@@ -31,8 +35,8 @@ export class User {
   @Column()
   lastName: string;
 
-  // @Column({ unique: true })
-  // phone: number;
+  @Column({ unique: true, nullable: true })
+  phone: number;
 
   @Column({ default: 1 })
   roleId: number;
@@ -40,8 +44,12 @@ export class User {
   @Column({ nullable: true })
   dateOfBirth: Date;
 
-  @ManyToOne(() => Role, (role) => role.id)
-  role: Role;
+  @OneToMany(() => Registration, (registration) => registration.user)
+  registration: Registration[];
+
+  @ManyToOne(() => Role, { cascade: true, eager: true })
+  @JoinTable()
+  role: Role[];
 
   @CreateDateColumn()
   createdAt: Date;
