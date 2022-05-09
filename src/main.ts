@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,7 +17,8 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   require('dotenv').config();
-  console.log(process.env.PASSWORD);
+
+  app.use(helmet());
 
   await app.listen(3000);
 }

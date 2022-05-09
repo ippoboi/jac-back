@@ -5,6 +5,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserRegisterRequestDto } from './dto/user-register.req.dto';
 import { User } from './entity/User.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -28,9 +29,11 @@ export class UserService {
 
   async update(id: number, updateUserDto: UpdateUserDto) {
     const user = await this.findOne(id);
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(user.password, salt);
 
     user.email = updateUserDto.email;
-    user.password = updateUserDto.password;
+    user.password = hashedPassword; //verifier que la modification du mdp marche
     user.firstName = updateUserDto.firstName;
     user.lastName = updateUserDto.lastName;
     user.dateOfBirth = updateUserDto.dateOfBirth;

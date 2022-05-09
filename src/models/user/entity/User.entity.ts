@@ -44,6 +44,9 @@ export class User {
   @Column({ nullable: true })
   dateOfBirth: Date;
 
+  @Column({ nullable: true })
+  job: string;
+
   @OneToMany(() => Registration, (registration) => registration.user)
   registration: Registration[];
 

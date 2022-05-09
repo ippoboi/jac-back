@@ -13,6 +13,7 @@ import { DocumentModule } from './models/document/document.module';
 import { EventsCategoryModule } from './models/events-category/events-category.module';
 import { AuthModule } from './models/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { ThrottlerModule } from '@nestjs/throttler';
 // import { APP_GUARD } from '@nestjs/core';
 // import { RolesGuard } from './guards/roles.guard';
 
@@ -28,6 +29,10 @@ import { ConfigModule } from '@nestjs/config';
     DocumentModule,
     EventsCategoryModule,
     AuthModule,
+    ThrottlerModule.forRoot({
+      ttl: 60,
+      limit: 10,
+    }),
   ],
   controllers: [AppController],
   providers: [
