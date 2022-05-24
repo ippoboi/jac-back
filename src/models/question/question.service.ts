@@ -22,7 +22,6 @@ export class QuestionService {
 
   findOne(id: number) {
     return this.questionRepository.findOne({
-      select: [],
       where: { id },
     });
   }

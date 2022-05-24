@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Roles } from 'src/decorators/roles.decorator';
 import { Repository } from 'typeorm';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
@@ -10,6 +11,7 @@ export class EventService {
   constructor(
     @InjectRepository(Event) private eventRepository: Repository<Event>,
   ) {}
+  @Roles()
   create(createEventDto: CreateEventDto) {
     const newEvent = this.eventRepository.create(createEventDto);
     return this.eventRepository.save(newEvent);
@@ -21,7 +23,6 @@ export class EventService {
 
   findOne(id: number) {
     return this.eventRepository.findOne({
-      select: [],
       where: { id },
     });
   }

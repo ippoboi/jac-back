@@ -14,8 +14,8 @@ import { EventsCategoryModule } from './models/events-category/events-category.m
 import { AuthModule } from './models/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
-// import { APP_GUARD } from '@nestjs/core';
-// import { RolesGuard } from './guards/roles.guard';
+import { RolesGuard } from './guards/roles.guard';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -37,10 +37,10 @@ import { ThrottlerModule } from '@nestjs/throttler';
   controllers: [AppController],
   providers: [
     AppService,
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: RolesGuard,
-    // },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
   ],
 })
 export class AppModule {}

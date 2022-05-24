@@ -13,7 +13,6 @@ export class Role {
   id: number;
 
   @OneToMany(() => User, (user) => user.id)
-  @JoinColumn()
   user: User[];
 
   @Column()

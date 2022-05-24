@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -13,6 +14,9 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UserRegisterRequestDto } from './dto/user-register.req.dto';
 import { SETTINGS } from 'src/app.utils';
 import { User } from './entity/User.entity';
+import { Roles } from 'src/decorators/roles.decorator';
+import JwtAuthGuard from '../auth/jwt-auth.guard';
+import { RolesGuard } from 'src/guards/roles.guard';
 
 @Controller('user')
 export class UserController {
@@ -23,6 +27,8 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   @Get()
   findAll() {
     return this.userService.findAll();

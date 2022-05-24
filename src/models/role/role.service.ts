@@ -21,7 +21,6 @@ export class RoleService {
 
   findOne(id: number) {
     return this.roleRepository.findOne({
-      select: [],
       where: { id },
     });
   }

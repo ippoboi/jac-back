@@ -13,9 +13,9 @@ export class AuthService {
     private userService: UserService,
     private jwtService: JwtService,
   ) {}
+
   async validateUserCreds(email: string, password: string): Promise<any> {
     const user = await this.userService.getUserByEmail(email);
-
     if (!user) {
       throw new BadRequestException();
     }
@@ -32,11 +32,7 @@ export class AuthService {
     const payload = {
       email: user.email,
       sub: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      phone: user.phone,
-      job: user.job,
-      dateOfBirth: user.dateOfBirth,
+      role: user.role,
     };
     return {
       access_token: this.jwtService.sign(payload),

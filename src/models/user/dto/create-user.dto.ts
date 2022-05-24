@@ -6,7 +6,8 @@ export class CreateUserDto {
   password: string;
   firstName: string;
   lastName: string;
-  // phone: number;
+  @IsOptional()
+  phone: number;
   roleId: number;
   @IsOptional()
   dateOfBirth: Date;

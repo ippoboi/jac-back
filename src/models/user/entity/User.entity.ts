@@ -12,6 +12,7 @@ import {
 import { Role } from '../../role/entity/Role.entity';
 import * as bcrypt from 'bcrypt';
 import { Registration } from 'src/models/registration/entity/Registration.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class User {
@@ -38,7 +39,7 @@ export class User {
   @Column({ unique: true, nullable: true })
   phone: number;
 
-  @Column({ default: 1 })
+  @Column({ default: 1, select: false })
   roleId: number;
 
   @Column({ nullable: true })
@@ -51,13 +52,12 @@ export class User {
   registration: Registration[];
 
   @ManyToOne(() => Role, { cascade: true, eager: true })
-  @JoinTable()
   role: Role[];
 
-  @CreateDateColumn()
+  @CreateDateColumn({ select: false })
   createdAt: Date;
 
-  @Column({ default: false })
+  @Column({ default: false, select: false })
   isActive: boolean;
 
   @BeforeInsert()
