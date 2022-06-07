@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { SkipThrottle } from '@nestjs/throttler';
@@ -17,10 +17,5 @@ export class AppController {
     @Body('password') password: string,
   ) {
     return {};
-  }
-
-  @Get('protected')
-  getHello(): string {
-    return;
   }
 }

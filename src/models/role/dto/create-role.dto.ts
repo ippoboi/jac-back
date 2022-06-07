@@ -1,4 +1,4 @@
 export class CreateRoleDto {
   id: number;
-  name: string;
+  roleLabel: string;
 }

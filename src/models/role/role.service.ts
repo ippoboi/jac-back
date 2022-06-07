@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { User } from '../user/entity/User.entity';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { Role } from './entity/Role.entity';
@@ -29,7 +30,7 @@ export class RoleService {
     const role = await this.findOne(id);
 
     role.id = updateRoleDto.id;
-    role.name = updateRoleDto.name;
+    role.roleLabel = updateRoleDto.roleLabel;
 
     return this.roleRepository.save(role);
   }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Roles } from 'src/decorators/roles.decorator';
 import { Repository } from 'typeorm';
@@ -11,7 +11,7 @@ export class EventService {
   constructor(
     @InjectRepository(Event) private eventRepository: Repository<Event>,
   ) {}
-  @Roles()
+
   create(createEventDto: CreateEventDto) {
     const newEvent = this.eventRepository.create(createEventDto);
     return this.eventRepository.save(newEvent);
@@ -42,8 +42,15 @@ export class EventService {
     return this.eventRepository.save(event);
   }
 
-  async remove(id: number) {
-    const event = await this.findOne(id);
-    return this.eventRepository.remove(event);
+  async delete(id: number) {
+    if (this.findOne(id)) {
+      return this.eventRepository.delete(id);
+    } else {
+      throw new NotFoundException({
+        status: HttpStatus.NOT_FOUND,
+        message:
+          'Event not found in database. Check if the id you entered is correct',
+      });
+    }
   }
 }

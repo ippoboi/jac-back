@@ -5,16 +5,19 @@ import {
   Column,
   JoinColumn,
   OneToMany,
+  ManyToMany,
+  BaseEntity,
 } from 'typeorm';
 
 @Entity()
-export class Role {
+export class Role extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => User, (user) => user.id)
+  @ManyToMany(() => User, (user) => user.role)
+  @JoinColumn()
   user: User[];
 
   @Column()
-  name: string;
+  roleLabel: string;
 }

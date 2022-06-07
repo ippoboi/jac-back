@@ -8,25 +8,22 @@ import {
   ManyToMany,
   JoinTable,
   OneToMany,
+  BaseEntity,
 } from 'typeorm';
 import { Role } from '../../role/entity/Role.entity';
 import * as bcrypt from 'bcrypt';
-import { Registration } from 'src/models/registration/entity/Registration.entity';
+
 import { Exclude } from 'class-transformer';
 
 @Entity()
-export class User {
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
-
-  // @BeforeInsert()
-  // generate() {
-  //   this.id = uuidv4();
-  // }
 
   @Column({ unique: true })
   email: string;
 
+  @Exclude()
   @Column()
   password: string;
 
@@ -39,19 +36,14 @@ export class User {
   @Column({ unique: true, nullable: true })
   phone: number;
 
-  @Column({ default: 1, select: false })
-  roleId: number;
-
   @Column({ nullable: true })
-  dateOfBirth: Date;
+  age: number;
 
   @Column({ nullable: true })
   job: string;
 
-  @OneToMany(() => Registration, (registration) => registration.user)
-  registration: Registration[];
-
-  @ManyToOne(() => Role, { cascade: true, eager: true })
+  @ManyToMany(() => Role, { cascade: true, eager: true })
+  @JoinTable()
   role: Role[];
 
   @CreateDateColumn({ select: false })
@@ -59,6 +51,10 @@ export class User {
 
   @Column({ default: false, select: false })
   isActive: boolean;
+
+  @Column({ nullable: true })
+  token: string;
+  user: any;
 
   @BeforeInsert()
   async setPassword(password: string) {

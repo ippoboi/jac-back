@@ -8,7 +8,7 @@ import { UserModule } from './models/user/user.module';
 import { QuestionModule } from './models/question/question.module';
 import { RoleModule } from './models/role/role.module';
 import { EventModule } from './models/event/event.module';
-import { RegistrationModule } from './models/registration/registration.module';
+
 import { DocumentModule } from './models/document/document.module';
 import { EventsCategoryModule } from './models/events-category/events-category.module';
 import { AuthModule } from './models/auth/auth.module';
@@ -16,6 +16,9 @@ import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { RolesGuard } from './guards/roles.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { MulterModule } from '@nestjs/platform-express';
+import { FileController } from './models/file/file.controller';
+import { FileService } from './models/file/file.service';
 
 @Module({
   imports: [
@@ -25,22 +28,24 @@ import { APP_GUARD } from '@nestjs/core';
     QuestionModule,
     RoleModule,
     EventModule,
-    RegistrationModule,
+
     DocumentModule,
     EventsCategoryModule,
     AuthModule,
+    MulterModule.register({ dest: './uploads' }),
     ThrottlerModule.forRoot({
       ttl: 60,
       limit: 10,
     }),
   ],
-  controllers: [AppController],
+  controllers: [AppController, FileController],
   providers: [
     AppService,
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
-    },
+    FileService,
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: RolesGuard,
+    // },
   ],
 })
 export class AppModule {}

@@ -17,6 +17,7 @@ import { User } from './entity/User.entity';
 import { Roles } from 'src/decorators/roles.decorator';
 import JwtAuthGuard from '../auth/jwt-auth.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
+import { AddTokenDto } from './dto/add-token.dto';
 
 @Controller('user')
 export class UserController {
@@ -55,5 +56,13 @@ export class UserController {
     userRegister: UserRegisterRequestDto,
   ): Promise<User> {
     return await this.userService.register(userRegister);
+  }
+
+  @Post('token')
+  async updateRtToken(
+    @Param('id') id: number,
+    @Body() addTokenDto: AddTokenDto,
+  ) {
+    return this.userService.updateRtToken(id, addTokenDto.token);
   }
 }

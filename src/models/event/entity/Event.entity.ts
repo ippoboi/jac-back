@@ -5,13 +5,15 @@ import {
   OneToOne,
   ManyToOne,
   OneToMany,
+  ManyToMany,
+  JoinTable,
+  BaseEntity,
 } from 'typeorm';
 import { eventsCategory } from 'src/models/events-category/entities/eventsCategory.entity';
 import { User } from 'src/models/user/entity/User.entity';
-import { Registration } from 'src/models/registration/entity/Registration.entity';
 
 @Entity()
-export class Event {
+export class Event extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -39,15 +41,22 @@ export class Event {
   @Column()
   category: number;
 
-  @OneToMany(() => Registration, (registration) => registration.event)
-  registration: Registration[];
+  @ManyToMany(() => User, { cascade: true, eager: true })
+  @JoinTable()
+  registered_user: User[];
 
   @ManyToOne(() => eventsCategory, (category) => category.id)
   categoryId: eventsCategory;
 
-  @Column()
+  @Column({ nullable: true })
   date: Date;
 
-  @Column()
+  @Column('time', { name: 'startTime', nullable: true })
+  startHour: Date;
+
+  @Column('time', { name: 'endTime', nullable: true })
+  endHour: Date;
+
+  @Column({ nullable: true })
   createdAt: Date;
 }
