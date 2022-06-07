@@ -49,7 +49,7 @@ export class Event extends BaseEntity {
   categoryId: eventsCategory;
 
   @Column({ nullable: true })
-  date: Date;
+  date: string;
 
   @Column('time', { name: 'startTime', nullable: true })
   startHour: Date;

@@ -28,8 +28,8 @@ export class CreateEventDto {
   @IsNotEmpty()
   category: number;
 
-  @IsEmpty()
-  date: Date;
+  @IsNotEmpty()
+  date: string;
 
   @IsNotEmpty()
   startHour: Date;

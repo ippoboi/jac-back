@@ -29,7 +29,16 @@ export class UserService {
 
   findOne(id: number): Promise<User> {
     return this.userRepository.findOne({
-      select: ['id', 'age', 'email', 'firstName', 'lastName', 'job', 'phone'],
+      select: [
+        'id',
+        'age',
+        'email',
+        'firstName',
+        'lastName',
+        'job',
+        'phone',
+        'role',
+      ],
       where: { id },
     });
   }
