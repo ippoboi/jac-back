@@ -1,12 +1,12 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { DB_CONNECTION } from './config/connection';
-import { Document } from './models/document/entity/Document.entity';
-import { Event } from './models/event/entity/Event.entity';
-import { eventsCategory } from './models/events-category/entities/eventsCategory.entity';
-import { Question } from './models/question/entity/Question.entity';
+import { Document } from './entities/Document.entity';
+import { Event } from './entities/Event.entity';
+import { eventsCategory } from './entities/eventsCategory.entity';
+import { Question } from './entities/Question.entity';
 
-import { Role } from './models/role/entity/Role.entity';
-import { User } from './models/user/entity/User.entity';
+import { Role } from './entities/Role.entity';
+import { User } from './entities/User.entity';
 
 export const config: TypeOrmModuleOptions = {
   type: 'postgres',
